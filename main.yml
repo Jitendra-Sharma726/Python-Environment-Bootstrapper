@@ -1,0 +1,15 @@
+---
+- name: Bootstrap Python Environment
+  hosts: web_stage
+  gather_facts: false
+  tasks:
+    - name: Ensure the staging directory exists
+      ansible.builtin.file:
+        path: "{{ root }}"
+        state: directory
+
+    - name: Create virtual environment and install dependencies
+      ansible.builtin.pip:
+        requirements: /home/chef/workspace/requirements.txt
+        virtualenv: "{{ root }}/venv"
+        virtualenv_command: python3 -m venv
